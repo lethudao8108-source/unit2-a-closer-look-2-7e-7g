@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Unit 2 - A Closer Look 2 | Simple Sentences</title>
+<style>
+:root{--green:#178a68;--green2:#e9f8f2;--orange:#f5a623;--ink:#17352c;--muted:#60746e;--red:#c43d3d;--ok:#167447;--card:#fff}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4faf7;color:var(--ink)}
+header{background:linear-gradient(135deg,#167d61,#1f9b77);color:#fff;padding:28px 16px;text-align:center}header h1{margin:0;font-size:clamp(25px,5vw,40px)}header h2{margin:7px 0 2px;font-size:clamp(18px,3.5vw,26px)}header p{margin:7px 0 0}
+.wrap{max-width:1000px;margin:auto;padding:16px}.student,.panel,.result{background:#fff;border-radius:16px;padding:16px;box-shadow:0 4px 18px #0001;margin-bottom:16px}.student{display:grid;grid-template-columns:2fr 1fr;gap:12px}label{font-weight:700}select{width:100%;padding:11px;border:1px solid #bdd7ce;border-radius:10px;font-size:16px;margin-top:6px;background:white}
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:15px 0}.tab{border:0;border-radius:12px;padding:13px 8px;font-weight:700;cursor:pointer;background:#dcefe8;color:#155d49}.tab.active{background:var(--green);color:#fff}.panel{display:none}.panel.active{display:block}.topline{display:flex;justify-content:space-between;gap:10px;align-items:center}.progress{font-weight:700;color:var(--green)}
+.q{border-top:1px solid #e4eee9;padding:16px 0}.q:first-of-type{border-top:0}.qtext{font-weight:700;line-height:1.45}.options{display:grid;gap:8px;margin-top:10px}.opt{display:flex;gap:9px;align-items:flex-start;padding:10px;border:1px solid #dbe9e4;border-radius:10px;cursor:pointer}.opt:hover{background:#f2faf7}.opt input{margin-top:3px}.hint{font-size:13px;color:var(--muted);margin-top:6px}.shortAnswer{width:100%;margin-top:10px;padding:12px 13px;border:1px solid #bdd7ce;border-radius:10px;font-size:16px}
+.actions{display:flex;justify-content:center;margin:20px 0}.submit{border:0;background:var(--orange);color:#352300;font-weight:800;font-size:18px;padding:14px 28px;border-radius:13px;cursor:pointer}.submit:disabled{opacity:.55;cursor:not-allowed}.result{display:none}.scoregrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.score{background:var(--green2);padding:12px;border-radius:10px;text-align:center;font-weight:700}.review{margin-top:14px}.reviewItem{padding:10px;border-radius:9px;margin:7px 0}.correct{background:#eaf8ef}.wrong{background:#fff0f0}.status{text-align:center;font-weight:700;margin-top:10px}.small{font-size:13px;color:var(--muted)}
+@media(max-width:650px){.student{grid-template-columns:1fr}.tabs{grid-template-columns:1fr}.scoregrid{grid-template-columns:1fr 1fr}}
+</style>
+</head><body>
+<header><h1>UNIT 2 – HEALTHY LIVING</h1><h2>LESSON 3: A CLOSER LOOK 2</h2><p>GRAMMAR PRACTICE – SIMPLE SENTENCES • 30 QUESTIONS</p></header>
+<div class="wrap">
+<div class="student"><div><label>HỌ VÀ TÊN<select id="student"><option value="">-- Chọn họ và tên --</option></select></label></div><div><label>LỚP<select id="className"><option value="">-- Chọn lớp --</option><option>7E</option><option>7G</option></select></label></div></div>
+<div class="tabs"><button class="tab active" data-tab="p1">EXERCISE 1<br>Simple sentences</button><button class="tab" data-tab="p2">EXERCISE 2<br>Subject & Verb</button><button class="tab" data-tab="p3">EXERCISE 3<br>Build sentences</button></div>
+<div id="p1" class="panel active"></div><div id="p2" class="panel"></div><div id="p3" class="panel"></div>
+<div class="actions"><button id="submitBtn" class="submit">NỘP BÀI</button></div><div id="status" class="status"></div><div id="result" class="result"></div>
+</div>
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyFfxDvQdbq94IIhNVpAkkF1HYv6eGD8yAoeiXLFg3HpNyap2VxNVBxmCV1knBLThNumQ/exec";
+// Điền danh sách học sinh thật của 7E và 7G vào hai mảng dưới đây.
+const STUDENTS={"7E":["Bùi Ngọc Bảo An","Đỗ Trường An","Phạm Nguyễn Minh An","Trần Minh An","Nguyễn Hoàng Nhật Anh","Nguyễn Vân Anh","Nguyễn Vũ Châu Anh","Trần Khắc Đức Anh","Nguyễn Quang Bảo","Đào Thị Mỹ Duyên","Nguyễn Như Đan","Nguyễn Vũ Ngọc Hà","Đào Xuân Huy Hiếu","Vũ Quốc Huy","Lưu Bảo Ngân","Hoàng Bảo Ngọc","Đỗ Nguyễn Thanh Nhàn","Trần Minh Nhật","Phạm Tiến Hoàng Phát","Trần Huy Thành","Vũ Tuấn Thành","Đào Đoàn Phương Thảo","Vũ Anh Thư","Vũ Minh Tiệp","Đào Sơn Tùng","Nguyễn Tường Văn","Hoàng Thanh Vân","Đinh Nhật Vi","Đào Duy Vũ","Phạm Thanh Xuân","Bùi Thị Hoàng Yến"],"7G":["Bùi Tâm An","Nguyễn Quang Anh","Tô Thị Bảo Anh","Trần Bảo Anh","Trần Minh Anh","Vũ Nguyễn Diệu Anh","Đồng Thái Bảo","Vũ Đức Doanh","Đào Trung Dũng","Trần Văn Dũng","Nguyễn Minh Đức","Trần Minh Hà","Trần Phước Hải","Nguyễn Đức Huy","Trần Việt Huy","Vũ Đức Gia Hưng","Cao Ngân Khánh","Nguyễn Tùng Lâm","Nguyễn Đức Gia Minh","Phạm Bình Minh","Vũ Hải Nam","Đào Thanh Ngân","Nguyễn Thị Kim Ngân","Đỗ Duy Nghĩa","Trần Thảo Nguyên","Đào Minh Phương","Đào Thị Phương Thảo","Phạm Phương Thảo","Trần Thị Ngọc Tiên","Nguyễn Tuấn Tú","Vũ Đức Tuấn Tú","Nguyễn Công Vinh","Bùi Dương Hải Vy","Đinh Thị Hoàng Yến"]};
+const Q=[
+{p:1,type:"mc",t:"Which is a simple sentence?",o:["My brother exercises every morning.","My brother exercises, and I ride my bike.","Because my brother exercises every morning.","My brother exercises but I don't."],a:0,e:"Câu A có một chủ ngữ chính (My brother) và một động từ chính (exercises)."},
+{p:1,type:"mc",t:"Tick the simple sentence.",o:["Lan drinks enough water every day.","Lan drinks water, and her sister drinks milk.","When Lan feels tired.","Lan drinks water but her brother doesn't."],a:0,e:"Câu A diễn đạt một ý hoàn chỉnh với một S + V chính."},
+{p:1,type:"mc",t:"Which sentence has one main subject and one main verb?",o:["Vegetables provide important vitamins.","Vegetables are healthy, and fruit is healthy too.","Because vegetables provide vitamins.","Vegetables provide vitamins but I prefer fruit."],a:0,e:"Vegetables = S; provide = V."},
+{p:1,type:"mc",t:"Choose the simple sentence.",o:["Too much fast food affects our health.","Too much fast food is unhealthy, so I avoid it.","If you eat too much fast food.","I avoid fast food and my brother avoids soft drinks."],a:0,e:"Câu A có một mệnh đề độc lập với một S + V chính."},
+{p:1,type:"mc",t:"Which is a complete simple sentence?",o:["My parents often cycle in the park.","My parents often cycle and I walk.","After my parents cycle in the park.","Because cycling is good for them."],a:0,e:"Câu A có chủ ngữ, động từ và ý nghĩa hoàn chỉnh."},
+{p:1,type:"mc",t:"Choose the simple sentence.",o:["The red spots on his face look painful.","The red spots look painful, and he feels worried.","Because the red spots look painful.","The red spots look painful but they are not serious."],a:0,e:"Cụm 'on his face' bổ sung thông tin; S chính là The red spots, V là look."},
+{p:1,type:"mc",t:"Which sentence is NOT a simple sentence?",o:["Mai uses lip balm in winter.","Mai usually washes her hands before meals.","Mai eats vegetables, and her brother drinks fruit juice.","My classmates exercise after school."],a:2,e:"Câu C có hai cặp S + V: Mai/eats và her brother/drinks."},
+{p:1,type:"mc",t:"Which is a simple sentence even though it has extra information?",o:["After school, Nam plays badminton in the sports centre.","Nam plays badminton, and Minh plays football.","Because Nam plays badminton after school.","Nam plays badminton but Minh doesn't."],a:0,e:"'After school' và 'in the sports centre' là trạng ngữ; câu vẫn có một S + V chính."},
+{p:1,type:"mc",t:"Choose the sentence with one complete idea.",o:["A healthy breakfast gives us energy for the day.","A healthy breakfast gives us energy, and exercise keeps us fit.","When a healthy breakfast gives us energy.","Because breakfast is important."],a:0,e:"Câu A là một câu đơn hoàn chỉnh."},
+{p:1,type:"mc",t:"Which sentence is a simple sentence?",o:["Many teenagers with acne feel uncomfortable.","Many teenagers have acne, so they wash their faces often.","Although many teenagers have acne.","Many teenagers have acne and their parents give advice."],a:0,e:"S = Many teenagers with acne; V = feel. Cụm 'with acne' không tạo thêm mệnh đề."},
+
+{p:2,type:"mc",t:"In 'Fresh fruit contains many vitamins.', what is the subject?",o:["Fresh fruit","contains","many vitamins","vitamins"],a:0,e:"Chủ ngữ là 'Fresh fruit'."},
+{p:2,type:"mc",t:"In 'Regular exercise keeps your body fit.', what is the main verb?",o:["Regular","exercise","keeps","fit"],a:2,e:"Động từ chính là 'keeps'."},
+{p:2,type:"mc",t:"Identify the subject in 'My younger sister uses sunscreen on sunny days.'",o:["My younger sister","uses","sunscreen","on sunny days"],a:0,e:"Cụm danh từ 'My younger sister' là chủ ngữ."},
+{p:2,type:"mc",t:"Identify the main verb in 'Soft drinks contain a lot of sugar.'",o:["Soft drinks","contain","a lot of","sugar"],a:1,e:"'contain' là động từ chính."},
+{p:2,type:"mc",t:"In 'After dinner, my father walks for thirty minutes.', which pair is S – V?",o:["After dinner – walks","my father – walks","dinner – walks","my father – thirty minutes"],a:1,e:"'After dinner' là trạng ngữ; S = my father, V = walks."},
+{p:2,type:"mc",t:"In 'The students in our class drink enough water.', which is the subject?",o:["The students in our class","our class","drink","enough water"],a:0,e:"Toàn bộ cụm 'The students in our class' làm chủ ngữ."},
+{p:2,type:"mc",t:"In 'Too much sugar sometimes causes health problems.', which is the main verb?",o:["sugar","sometimes","causes","health problems"],a:2,e:"'sometimes' là trạng từ; động từ chính là 'causes'."},
+{p:2,type:"text",t:"Write the Subject and Verb in: 'In winter, her lips become dry easily.' Use the form: Subject | Verb",answers:["her lips|become"],display:"her lips | become",e:"'In winter' là trạng ngữ. Subject = her lips; Verb = become."},
+{p:2,type:"text",t:"Write the Subject and Verb in: 'Eating colourful vegetables improves our diet.' Use the form: Subject | Verb",answers:["eating colourful vegetables|improves"],display:"Eating colourful vegetables | improves",e:"Cụm 'Eating colourful vegetables' làm chủ ngữ; 'improves' là động từ chính."},
+{p:2,type:"text",t:"Write the Subject and Verb in: 'A short walk after school makes me feel relaxed.' Use the form: Subject | Verb",answers:["a short walk after school|makes"],display:"A short walk after school | makes",e:"Subject = A short walk after school; động từ chính = makes."},
+
+{p:3,type:"mc",t:"Choose the correct sentence from: 'my brother / every morning / exercises / in the park'.",o:["My brother exercises in the park every morning.","My brother every morning exercises in park the.","Exercises my brother in the park every morning.","My brother in the park every morning exercise."],a:0,e:"Trật tự tự nhiên: S + V + nơi chốn + thời gian."},
+{p:3,type:"mc",t:"Choose the best sentence from: 'too much sugar / our teeth / affects'.",o:["Too much sugar affects our teeth.","Our teeth affects too much sugar.","Too much sugar our teeth affects.","Affect too much sugar our teeth."],a:0,e:"S = Too much sugar; V = affects; O = our teeth."},
+{p:3,type:"mc",t:"Which sentence is correctly written?",o:["My sister doesn't use sunscreen on cloudy days.","My sister don't uses sunscreen on cloudy days.","My sister not use sunscreen on cloudy days.","My sister doesn't uses sunscreen on cloudy days."],a:0,e:"Với chủ ngữ số ít, câu phủ định dùng doesn't + động từ nguyên mẫu."},
+{p:3,type:"mc",t:"Choose the correct sentence from: 'children / need / enough sleep / every night'.",o:["Children need enough sleep every night.","Children needs enough sleep every night.","Enough sleep need children every night.","Children every night enough sleep need."],a:0,e:"Children là chủ ngữ số nhiều nên dùng 'need'."},
+{p:3,type:"text",t:"Correct the sentence: 'My father exercise every morning.'",answers:["my father exercises every morning"],display:"My father exercises every morning.",e:"Chủ ngữ 'My father' là ngôi thứ ba số ít nên động từ thêm -s."},
+{p:3,type:"text",t:"Write a correct sentence from: 'Lan / not eat / much fast food'.",answers:["lan doesn't eat much fast food","lan does not eat much fast food"],display:"Lan doesn't eat much fast food.",e:"Phủ định hiện tại đơn với Lan: doesn't + eat."},
+{p:3,type:"text",t:"Rearrange the words: 'on hot days / enough water / drink / we'.",answers:["we drink enough water on hot days","on hot days we drink enough water"],display:"We drink enough water on hot days.",e:"Câu cần đủ S + V và sắp xếp trạng ngữ hợp lý."},
+{p:3,type:"text",t:"Rearrange the words: 'usually / my classmates / after school / play sports'.",answers:["my classmates usually play sports after school","after school my classmates usually play sports"],display:"My classmates usually play sports after school.",e:"'usually' đứng trước động từ thường 'play'."},
+{p:3,type:"text",t:"Write a correct sentence from: 'red spots / sometimes / appear / on his face'.",answers:["red spots sometimes appear on his face","sometimes red spots appear on his face"],display:"Red spots sometimes appear on his face.",e:"Chủ ngữ số nhiều 'Red spots' đi với 'appear'."},
+{p:3,type:"text",t:"Combine into ONE simple sentence: 'Mai eats vegetables. Mai drinks enough water.'",answers:["mai eats vegetables and drinks enough water"],display:"Mai eats vegetables and drinks enough water.",e:"Một chủ ngữ 'Mai' dùng chung cho hai động từ 'eats' và 'drinks'."}
+];
+const answers={};
+function esc(s){return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function normalizeText(s){
+  return String(s||"").toLowerCase().trim()
+    .replace(/[’‘]/g,"'")
+    .replace(/[.,!?;:]+$/g,"")
+    .replace(/\s*\|\s*/g,"|")
+    .replace(/\s+/g," ");
+}
+function isAnswered(i){
+  const q=Q[i];
+  if(q.type==="text") return String(answers[i]||"").trim().length>0;
+  return answers[i]!==undefined;
+}
+function isCorrect(i){
+  const q=Q[i], v=answers[i];
+  if(q.type==="text"){
+    const n=normalizeText(v);
+    return q.answers.some(a=>normalizeText(a)===n);
+  }
+  return v===q.a;
+}
+function render(){
+  [1,2,3].forEach(p=>{
+    const box=document.getElementById('p'+p);
+    const qs=Q.map((q,i)=>({...q,i})).filter(q=>q.p===p);
+    box.innerHTML=`<div class="topline"><h3>${p===1?'EXERCISE 1 – RECOGNISING SIMPLE SENTENCES':p===2?'EXERCISE 2 – SUBJECT & VERB':'EXERCISE 3 – BUILDING SIMPLE SENTENCES'}</h3><span class="progress" id="prog${p}">Answered: 0 / 10</span></div>`+
+    qs.map(q=>{
+      const body=q.type==="text"
+        ? `<input class="shortAnswer" type="text" data-q="${q.i}" placeholder="Type your answer here..." autocomplete="off"><div class="hint">Tự luận: gõ câu trả lời của em.</div>`
+        : `<div class="options">${q.o.map((x,j)=>`<label class="opt"><input type="radio" name="q${q.i}" value="${j}"> <span>${esc(x)}</span></label>`).join('')}</div>`;
+      return `<div class="q"><div class="qtext">${q.i+1}. ${esc(q.t)}</div>${body}</div>`;
+    }).join('');
+  });
+  document.querySelectorAll('input[type=radio]').forEach(x=>x.addEventListener('change',e=>{
+    answers[+e.target.name.slice(1)]=+e.target.value;updateProgress();
+  }));
+  document.querySelectorAll('.shortAnswer').forEach(x=>x.addEventListener('input',e=>{
+    answers[+e.target.dataset.q]=e.target.value;updateProgress();
+  }));
+}
+function updateProgress(){
+  [1,2,3].forEach(p=>{
+    const ids=Q.map((q,i)=>q.p===p?i:null).filter(x=>x!==null);
+    document.getElementById('prog'+p).textContent=`Answered: ${ids.filter(i=>isAnswered(i)).length} / 10`;
+  });
+}
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('.tab,.panel').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');document.getElementById(b.dataset.tab).classList.add('active');
+});
+const cls=document.getElementById('className'),stu=document.getElementById('student');
+cls.onchange=()=>{
+  stu.innerHTML='<option value="">-- Chọn họ và tên --</option>'+STUDENTS[cls.value].map(n=>`<option>${esc(n)}</option>`).join('');
+};
+function scores(){
+  let s=[0,0,0];
+  Q.forEach((q,i)=>{if(isCorrect(i))s[q.p-1]++});
+  return s;
+}
+function showResult(s){
+  const total=s.reduce((a,b)=>a+b,0);
+  let rev=Q.map((q,i)=>{
+    const ok=isCorrect(i);
+    const correctAnswer=q.type==="text"?q.display:q.o[q.a];
+    return `<div class="reviewItem ${ok?'correct':'wrong'}"><b>Câu ${i+1}: ${ok?'✓ Đúng':'✗ Sai'}</b>${ok?'':`<br>Đáp án đúng: <b>${esc(correctAnswer)}</b><br><span class="small">${esc(q.e)}</span>`}</div>`;
+  }).join('');
+  const r=document.getElementById('result');
+  r.style.display='block';
+  r.innerHTML=`<h3>KẾT QUẢ</h3><div class="scoregrid"><div class="score">Bài 1<br>${s[0]}/10</div><div class="score">Bài 2<br>${s[1]}/10</div><div class="score">Bài 3<br>${s[2]}/10</div><div class="score">Tổng<br>${total}/30</div></div><div class="review"><h3>Chữa bài</h3>${rev}</div>`;
+  r.scrollIntoView({behavior:'smooth'});
+}
+document.getElementById('submitBtn').onclick=async()=>{const status=document.getElementById('status');if(!cls.value||!stu.value){status.textContent='Vui lòng chọn đúng lớp và họ tên trước khi làm bài.';return}const answeredCount=Q.filter((q,i)=>isAnswered(i)).length;if(answeredCount<30){status.textContent=`Em còn ${30-answeredCount} câu chưa trả lời.`;return}if(SCRIPT_URL.includes('DÁN_LINK')){status.textContent='Giáo viên chưa cài SCRIPT_URL.';return}const s=scores(),payload={name:stu.value,className:cls.value,score1:s[0],score2:s[1],score3:s[2],total:s.reduce((a,b)=>a+b,0)};const btn=document.getElementById('submitBtn');btn.disabled=true;status.textContent='Đang nộp bài...';try{const res=await fetch(SCRIPT_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)});const data=await res.json();if(data.status==='duplicate'||data.status==='already_submitted'){status.textContent='Em đã nộp bài rồi. Mỗi học sinh chỉ được nộp bài 1 lần.';btn.disabled=false;return}if(data.status!=='success')throw new Error(data.message||'Không thể nộp bài');status.textContent='✓ Nộp bài thành công!';showResult(s)}catch(e){status.textContent='Chưa gửi được kết quả. Hãy báo giáo viên kiểm tra đường dẫn Apps Script. '+e.message;btn.disabled=false;}}
+render();
+</script></body></html>
